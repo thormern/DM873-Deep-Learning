@@ -1,6 +1,6 @@
 setwd('D:/Uni/DM873 DL/Project')
 
-data <- read.delim('dataset/butterflies.txt',header=FALSE)
+data <- read.delim('data/butterflies.txt',header=FALSE)
 
 
 count1 = 0;
