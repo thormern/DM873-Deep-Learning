@@ -10,14 +10,17 @@ from keras.callbacks import ModelCheckpoint
 trainImageDataGen = ImageDataGenerator(rescale=1/255.,horizontal_flip=True)
 validationImageDataGen = ImageDataGenerator(rescale=1/255.)
 
-trainGen = trainImageDataGen.flow_from_directory("Project/Task1/Train",
+trainGen = trainImageDataGen.flow_from_directory(
+	"Project/Task1/Train",
 	target_size=(224,224),
 	batch_size=16,
 	class_mode="binary")
 
-valGen = validationImageDataGen.flow_from_directory("Project/Task1/Validation",
+valGen = validationImageDataGen.flow_from_directory(
+	"Project/Task1/Validation",
 	target_size=(224,224),
 	batch_size=16,
-    class_mode="binary")
+	class_mode="binary")
 
-	
+
+#Test af git
