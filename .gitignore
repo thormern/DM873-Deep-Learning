@@ -141,3 +141,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Dataset
+!data/butterflies.txt
+!data/family.txt
+!data/genus.txt
+!data/species.txt
+!data/subfamily.txt
+data/*
