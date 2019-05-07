@@ -20,19 +20,19 @@ folders = ['1 Papilionidae', '2 Pieridae']
 training_data = os.path.join(root_path, 'data', 'dataset', 'model1', 'train')
 
 # Validation data
-training_data = os.path.join(root_path, 'data', 'dataset', 'model1', 'validation')
+validation_data = os.path.join(root_path, 'data', 'dataset', 'model1', 'validation')
 
 trainImageDataGen = ImageDataGenerator(rescale=1/255.,horizontal_flip=True)
 validationImageDataGen = ImageDataGenerator(rescale=1/255.)
 
 trainGen = trainImageDataGen.flow_from_directory(
-	"Project/Task1/Train",
+	training_data,
 	target_size=(224,224),
 	batch_size=16,
 	class_mode="binary")
 
 valGen = validationImageDataGen.flow_from_directory(
-	"Project/Task1/Validation",
+	validation_data,
 	target_size=(224,224),
 	batch_size=16,
 	class_mode="binary")
@@ -63,9 +63,3 @@ def create_model( x_train ):
 
 	return model
 
-
-
-
-
-
-#Test af git
