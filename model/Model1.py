@@ -10,6 +10,7 @@ from keras import layers
 
 import os
 
+batch_size = 32
 # Gets root path of project
 root_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,38 +29,37 @@ validationImageDataGen = ImageDataGenerator(rescale=1/255.)
 trainGen = trainImageDataGen.flow_from_directory(
 	training_data,
 	target_size=(224,224),
-	batch_size=16,
+	batch_size=batch_size,
 	class_mode="binary")
 
 valGen = validationImageDataGen.flow_from_directory(
 	validation_data,
 	target_size=(224,224),
-	batch_size=16,
+	batch_size=batch_size,
 	class_mode="binary")
 
 
 #Test Model in the making - Thor
-def create_model( x_train ):
 
-	model = keras.Sequential()
 
-	keras.layers.Conv1D(filters, kernel_size, strides=1, padding='valid', data_format='channels_last', dilation_rate=1,
-						activation=None, use_bias=True, kernel_initializer='glorot_uniform', bias_initializer='zeros',
-						kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None,
-						kernel_constraint=None, bias_constraint=None)
-	keras.layers.Dense(units, activation=None, use_bias=True, kernel_initializer='glorot_uniform',
-					   bias_initializer='zeros', kernel_regularizer=None, bias_regularizer=None,
-					   activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+inputLayer = Input(batch_shape=(batch_size,) + training_data.shape[1:])
 
-	keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None)
-	keras.layers.Activation(activation)
-	keras.layers.Dropout(rate, noise_shape=None, seed=None)
-	keras.layers.Flatten(data_format=None)
-	optimiser = Adam( lr = 1e-3 )  #hmmm
+conv2d_1 = Conv2D(32, kernel_size=(3,3), strides=1,padding='none', activation='relu')(inputLayer)
+maxPooling_1 = MaxPooling2D(pool_size=[2,2],strides=1, padding='same', data_format=None)(conv2d_1)
+conv2d_2 = Conv2D(32, kernel_size=(3,3), strides=1,padding='none', activation='relu')(maxPooling_1)
+maxPooling_2 = MaxPooling2D(pool_size=[2,2],strides=1, padding='same', data_format=None)(conv2d_2)
+conv2d_3 = Conv2D(32, kernel_size=(3,3), strides=1,padding='none', activation='relu')(maxPooling_2)
+maxPooling_3 = MaxPooling2D(pool_size=[2,2],strides=1, padding='same', data_format=None)(conv2d_3)
+flatLayer = Flatten(data_format=None)(maxPooling_3)
+outputLayer = Dense(units=2,activation='softmax')(flatLayer)
 
-	model.compile( optimizer = optimiser,
-				   loss = 'binary_crossentropy',
-				   metrics =[ 'accuracy'] )
 
-	return model
+model = Model(inputLayer, outputLayer)
+model.summary()
+model.save('task2Subtask1Test')
+plot_model(model, to_file='model.png')
+
+
+
+
 
