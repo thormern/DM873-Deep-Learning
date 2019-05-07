@@ -1,6 +1,7 @@
 import os
 from shutil import copyfile
 import uuid
+from random import choice, sample
 
 # Gets root path of project
 root_path = os.path.dirname(os.path.abspath(__file__))
@@ -8,21 +9,12 @@ root_path = os.path.dirname(os.path.abspath(__file__))
 # Defines folders for where to put the files
 folders = ['1 Papilionidae', '2 Pieridae', '3 Nymphalidae', '4 Lycaenidae', '5 Hesperiidae']
 
+######################################## DATA DIVITION ########################################
+
 # Creates the folders defined above
-if not os.path.exists(os.path.join(root_path, 'data', folders[0])):
-    os.makedirs(os.path.join(root_path, 'data', folders[0]))
-
-if not os.path.exists(os.path.join(root_path, 'data', folders[1])):
-    os.makedirs(os.path.join(root_path, 'data', folders[1]))
-
-if not os.path.exists(os.path.join(root_path, 'data', folders[2])):
-    os.makedirs(os.path.join(root_path, 'data', folders[2]))
-
-if not os.path.exists(os.path.join(root_path, 'data', folders[3])):
-    os.makedirs(os.path.join(root_path, 'data', folders[3]))
-
-if not os.path.exists(os.path.join(root_path, 'data', folders[4])):
-    os.makedirs(os.path.join(root_path, 'data', folders[4]))
+for folder in folders:
+    if not os.path.exists(os.path.join(root_path, 'data', folder)):
+        os.makedirs(os.path.join(root_path, 'data', folder))
 
 # Opens and reads the file describing the dataset
 f = open(root_path + '/data/butterflies.txt')
@@ -40,3 +32,64 @@ for line in lines:
                        columns[4] + '_' + str(uuid.uuid4()) + '.jpg')
     copyfile(src, dst)
 
+
+######################################## DATA SAMPLING ########################################
+
+#Helper function which samples randomly and copies samples to destination folder
+def sample_data(src, dst, count):
+    _files = [f for f in os.listdir(src)]
+
+    _data = sample(_files, count)
+
+    for _file in _data:
+        _src = os.path.join(src, _file)
+        _dst = os.path.join(dst, _file)
+        copyfile(_src, _dst)
+
+##### MODEL 1 #####
+for i in [0,1]:
+    #Creates folder
+    for _dir in ['validation', 'train']:
+        if not os.path.exists(os.path.join(root_path, 'data', 'dataset', 'model1', _dir, folders[i])):
+            os.makedirs(os.path.join(root_path, 'data', 'dataset', 'model1', _dir, folders[i]))
+
+    #Creates paths for src and destination of both validation data and training data
+    _src = os.path.join(root_path, 'data', folders[i])
+    _val_dst = os.path.join(root_path, 'data', 'dataset', 'model1', 'validation', folders[i])
+    _train_dst = os.path.join(root_path, 'data', 'dataset', 'model1', 'train', folders[i])
+
+    #Calls helper function
+    sample_data(_src, _val_dst, 1000) #Validation
+    sample_data(_src, _train_dst, 2000) #Training
+
+##### MODEL 2 #####
+for i in [2,3]:
+    #Creates folder
+    for _dir in ['validation', 'train']:
+        if not os.path.exists(os.path.join(root_path, 'data', 'dataset', 'model2', _dir, folders[i])):
+            os.makedirs(os.path.join(root_path, 'data', 'dataset', 'model2', _dir, folders[i]))
+
+    #Creates paths for src and destination of both validation data and training data
+    _src = os.path.join(root_path, 'data', folders[i])
+    _val_dst = os.path.join(root_path, 'data', 'dataset', 'model2', 'validation', folders[i])
+    _train_dst = os.path.join(root_path, 'data', 'dataset', 'model2', 'train', folders[i])
+
+    #Calls helper function
+    sample_data(_src, _val_dst, 500) #Validation
+    sample_data(_src, _train_dst, 250) #Training
+
+##### MODEL 3 #####
+for i in [0, 1, 2, 3, 4]:
+    #Creates folder
+    for _dir in ['validation', 'train']:
+        if not os.path.exists(os.path.join(root_path, 'data', 'dataset', 'model3', _dir, folders[i])):
+            os.makedirs(os.path.join(root_path, 'data', 'dataset', 'model3', _dir, folders[i]))
+
+    #Creates paths for src and destination of both validation data and training data
+    _src = os.path.join(root_path, 'data', folders[i])
+    _val_dst = os.path.join(root_path, 'data', 'dataset', 'model3', 'validation', folders[i])
+    _train_dst = os.path.join(root_path, 'data', 'dataset', 'model3', 'train', folders[i])
+
+    #Calls helper function
+    sample_data(_src, _val_dst, 700) #Validation
+    sample_data(_src, _train_dst, 1000) #Training
