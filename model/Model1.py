@@ -8,6 +8,20 @@ from keras.models import Model
 from keras.callbacks import ModelCheckpoint
 from keras import layers
 
+import os
+
+# Gets root path of project
+root_path = os.path.dirname(os.path.abspath(__file__))
+
+# Defines folders for where to put the files
+folders = ['1 Papilionidae', '2 Pieridae']
+
+# Training data
+training_data = os.path.join(root_path, 'data', 'dataset', 'model1', 'train')
+
+# Validation data
+training_data = os.path.join(root_path, 'data', 'dataset', 'model1', 'validation')
+
 trainImageDataGen = ImageDataGenerator(rescale=1/255.,horizontal_flip=True)
 validationImageDataGen = ImageDataGenerator(rescale=1/255.)
 
