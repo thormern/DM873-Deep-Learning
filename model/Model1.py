@@ -1,11 +1,15 @@
+import keras
 from keras.utils import plot_model
 from keras.preprocessing.image import ImageDataGenerator
-from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Conv2D, MaxPooling2D, Convolution2D
 from keras.layers import Activation, Dropout, Flatten, Dense, Input, Concatenate, BatchNormalization
-from keras.models import Sequential
+from keras import backend as K, Sequential
+from keras.models import Model
+from keras.callbacks import ModelCheckpoint
+from keras import layers
+
 import os
 
-batch_size = 32
 # Gets root path of project
 root_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -24,47 +28,30 @@ validationImageDataGen = ImageDataGenerator(rescale=1 / 255.)
 trainGen = trainImageDataGen.flow_from_directory(
     training_data,
     target_size=(224, 224),
-    batch_size=batch_size,
+    batch_size=16,
     class_mode="binary")
 
 valGen = validationImageDataGen.flow_from_directory(
     validation_data,
     target_size=(224, 224),
-    batch_size=batch_size,
+    batch_size=16,
     class_mode="binary")
 
-# Test Model in the making - Thor
-
-
+IMG_SIZE = 224
 model = Sequential()
+model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=(IMG_SIZE, IMG_SIZE, 3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Convolution2D(32, 3, 3, activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Convolution2D(32, 3, 3, activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Flatten())
+model.add(Dense(1, activation='softmax'))
 
-model.add(Conv2D(32, kernel_size=(3, 3), strides=1, padding=None, activation='relu'))
-model.add(MaxPooling2D(pool_size=[2, 2], strides=1, padding='same', data_format=None))
-model.add(Conv2D(32, kernel_size=(3, 3), strides=1, padding=None, activation='relu'))
-model.add(MaxPooling2D(pool_size=[2, 2], strides=1, padding='same', data_format=None))
-model.add(Conv2D(32, kernel_size=(3, 3), strides=1, padding=None, activation='relu'))
-model.add(MaxPooling2D(pool_size=[2, 2], strides=1, padding='same', data_format=None))
-model.add(Flatten(data_format=None))
-model.add(Dense(units=2, activation='softmax'))
-
-model.save('task2Subtask1Test')
-plot_model(model, to_file='model.png')
-
-np_epoch = 10
-
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-model.fit_generator(trainGen, epochs=np_epoch, batch_size=batch_size, validation_data=valGen)
-
-# inputLayer = Input(batch_shape=(batch_size,) + trainGen.shape[1:])
-
-# conv2d_1 = Conv2D(32, kernel_size=(3,3), strides=1,padding='none', activation='relu')(inputLayer)
-# maxPooling_1 = MaxPooling2D(pool_size=[2,2],strides=1, padding='same', data_format=None)(conv2d_1)
-# conv2d_2 = Conv2D(32, kernel_size=(3,3), strides=1,padding='none', activation='relu')(maxPooling_1)
-# maxPooling_2 = MaxPooling2D(pool_size=[2,2],strides=1, padding='same', data_format=None)(conv2d_2)
-# conv2d_3 = Conv2D(32, kernel_size=(3,3), strides=1,padding='none', activation='relu')(maxPooling_2)
-# maxPooling_3 = MaxPooling2D(pool_size=[2,2],strides=1, padding='same', data_format=None)(conv2d_3)
-# flatLayer = Flatten(data_format=None)(maxPooling_3)
-# outputLayer = Dense(units=2,activation='softmax')(flatLayer)'
-
-
-##model = Model(inputLayer, outputLayer)
+model.summary()
+model.compile(loss='binary_crossentropy', optimizer='adam')
+model.fit_generator(generator=trainGen,
+                    epochs=25,
+                    steps_per_epoch=1,
+                    validation_steps=1,
+                    validation_data=valGen)
