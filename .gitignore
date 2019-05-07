@@ -108,10 +108,10 @@ venv.bak/
 
 #VSCode
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+#!.vscode/settings.json
+#!.vscode/tasks.json
+#!.vscode/launch.json
+#!.vscode/extensions.json
 
 # MacOS
 # General
@@ -142,9 +142,9 @@ Temporary Items
 .apdisk
 
 # Dataset
+data/*
 !data/butterflies.txt
 !data/family.txt
 !data/genus.txt
 !data/species.txt
 !data/subfamily.txt
-data/*
