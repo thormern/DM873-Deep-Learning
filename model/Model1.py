@@ -17,10 +17,10 @@ root_path = os.path.dirname(os.path.abspath(__file__))
 folders = ['1 Papilionidae', '2 Pieridae']
 
 # Training data
-training_data = os.path.join(root_path, 'data', 'dataset', 'model1', 'train')
+training_data = os.path.join(root_path, '..', 'data', 'dataset', 'model1', 'train')
 
 # Validation data
-validation_data = os.path.join(root_path, 'data', 'dataset', 'model1', 'validation')
+validation_data = os.path.join(root_path, '..', 'data', 'dataset', 'model1', 'validation')
 
 trainImageDataGen = ImageDataGenerator(rescale=1/255.,horizontal_flip=True)
 validationImageDataGen = ImageDataGenerator(rescale=1/255.)

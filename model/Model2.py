@@ -10,6 +10,14 @@ from keras.callbacks import ModelCheckpoint
 import numpy as np
 import matplotlib.pyplot as plt
 
+import os
+
+# Gets root path of project
+root_path = os.path.dirname(os.path.abspath(__file__))
+
+# Defines folders for where to put the files
+folders = ['3 Nymphalidae', '4 Lycaenidae']
+
 trainImageDataGen = ImageDataGenerator(rescale=1/255.,
     horizontal_flip=True,
     zoom_range=0.1,
@@ -19,24 +27,20 @@ trainImageDataGen = ImageDataGenerator(rescale=1/255.,
 
 validationImageDataGen = ImageDataGenerator(rescale=1/255.)
 
-trainGen = trainImageDataGen.flow_from_directory("Project/Task2/Train",
+# Training data
+training_data = os.path.join(root_path, '..', 'data', 'dataset', 'model2', 'train')
+
+# Validation data
+validation_data = os.path.join(root_path, '..', 'data', 'dataset', 'model2', 'validation')
+
+
+trainGen = trainImageDataGen.flow_from_directory(training_data,
 	target_size=(224,224),
 	batch_size=16,
 	class_mode="binary")
 
-valGen = validationImageDataGen.flow_from_directory("Project/Task2/Validation",
+valGen = validationImageDataGen.flow_from_directory(validation_data,
 	target_size=(224,224),
 	batch_size=16,
     class_mode="binary")
 
-
-image_path = "Project/Task2/Train/3 Nymphalidae/4.jpg"
-image = plt.imread(image_path).astype(float)
-
-save_here = "Project/Task2/Augmentation/1.png"
-trainGen.fit(image)
-trainGen.flow(image,                    #image we chose
-        save_to_dir=save_here,     #this is where we figure out where to save
-        save_prefix='aug',        # it will save the images as 'aug_0912' some number for every new augmented image
-        save_format='png')    # here we define a range because we want 10 augmented images otherwise it will keep looping forever I think
-    
