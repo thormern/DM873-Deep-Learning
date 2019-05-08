@@ -148,3 +148,4 @@ data/*
 !data/genus.txt
 !data/species.txt
 !data/subfamily.txt
+model/data
