@@ -56,3 +56,5 @@ model.fit_generator(generator=trainGen,
 					steps_per_epoch=1,
 					validation_steps=1,
                     validation_data=valGen)
+
+model.evaluate_generator(valGen)
