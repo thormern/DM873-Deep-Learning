@@ -40,21 +40,23 @@ valGen = validationImageDataGen.flow_from_directory(
 IMG_SIZE = 224
 model = Sequential()
 model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=(IMG_SIZE, IMG_SIZE, 3)))
-model.add(Convolution2D(32, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
+
+model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=(IMG_SIZE, IMG_SIZE, 3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Convolution2D(32, 3, 3, activation='relu', input_shape=(IMG_SIZE, IMG_SIZE, 3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.5))
 model.add(Dense(1, activation='softmax'))
 
 model.summary()
 model.compile(loss='binary_crossentropy', optimizer='adam')
 model.fit_generator(generator=trainGen,
-					epochs=25,
-					steps_per_epoch=1,
-					validation_steps=1,
+					epochs=20,
+					steps_per_epoch=10,
+					validation_steps=5,
                     validation_data=valGen)
 model.save("model1.h5")
 model.evaluate_generator(valGen, steps=5)

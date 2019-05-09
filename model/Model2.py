@@ -48,9 +48,9 @@ valGen = validationImageDataGen.flow_from_directory(
     class_mode="binary")
 
 model.fit_generator(generator=trainGen,
-                    epochs=25,
-                    steps_per_epoch=1,
-                    validation_steps=1,
+					epochs=20,
+					steps_per_epoch=10,
+					validation_steps=5,
                     validation_data=valGen)
 model.save("model2.h5")
 model.evaluate_generator(valGen, steps=5)
