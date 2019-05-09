@@ -23,22 +23,21 @@ training_data = os.path.join(root_path, '..', 'data', 'dataset', 'model1', 'trai
 validation_data = os.path.join(root_path, '..', 'data', 'dataset', 'model1', 'validation')
 
 # Data generators, data augmentation for training data
-trainImageDataGen = ImageDataGenerator(rescale=1/255.,horizontal_flip=True, rotation_range=25, width_shift_range=10,
+trainImageDataGen = ImageDataGenerator(rescale=1 / 255., horizontal_flip=True, rotation_range=25, width_shift_range=10,
                                        height_shift_range=10, vertical_flip=True)
-validationImageDataGen = ImageDataGenerator(rescale=1/255.)
+validationImageDataGen = ImageDataGenerator(rescale=1 / 255.)
 
 trainGen = trainImageDataGen.flow_from_directory(
-	training_data,
-	target_size=(224,224),
-	batch_size=16,
-	class_mode="binary")
+    training_data,
+    target_size=(224, 224),
+    batch_size=16,
+    class_mode="binary")
 
 valGen = validationImageDataGen.flow_from_directory(
-	validation_data,
-	target_size=(224,224),
-	batch_size=16,
-	class_mode="binary")
-
+    validation_data,
+    target_size=(224, 224),
+    batch_size=16,
+    class_mode="binary")
 
 # Model definition
 # CHANGE THIS TO TEST DIFFERENT MODELS
@@ -64,9 +63,9 @@ model.compile(loss='binary_crossentropy', optimizer='adam')
 
 # Train the model
 model.fit_generator(generator=trainGen,
-					epochs=20,
-					steps_per_epoch=10,
-					validation_steps=5,
+                    epochs=20,
+                    steps_per_epoch=10,
+                    validation_steps=5,
                     validation_data=valGen)
 
 # Save the model
