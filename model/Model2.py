@@ -51,6 +51,9 @@ valGen = validationImageDataGen.flow_from_directory(
     batch_size=16,
     class_mode="binary")
 
+# Prepare the model for training
+model.compile(loss='binary_crossentropy', optimizer='adam')
+
 # Train model
 model.fit_generator(generator=trainGen,
                     epochs=20,
