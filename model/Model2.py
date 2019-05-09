@@ -36,7 +36,8 @@ training_data = os.path.join(root_path, '..', 'data', 'dataset', 'model2', 'trai
 validation_data = os.path.join(root_path, '..', 'data', 'dataset', 'model2', 'validation')
 
 # Data generators, data augmentation for training data
-trainImageDataGen = ImageDataGenerator(rescale=1 / 255., horizontal_flip=True)
+trainImageDataGen = ImageDataGenerator(rescale=1 / 255., horizontal_flip=True, rotation_range=25, width_shift_range=10,
+                                       height_shift_range=10, vertical_flip=True)
 validationImageDataGen = ImageDataGenerator(rescale=1 / 255.)
 
 trainGen = trainImageDataGen.flow_from_directory(
