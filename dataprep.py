@@ -59,42 +59,42 @@ def sample_data(src, dst, count, _files):
     
     return _files
 
-# ##### MODEL 1 #####
-# for i in [0,1]:
-#     #Creates folder
-#     for _dir in ['validation', 'train']:
-#         if not os.path.exists(os.path.join(root_path, 'data', 'dataset', 'model1', _dir, folders[i])):
-#             os.makedirs(os.path.join(root_path, 'data', 'dataset', 'model1', _dir, folders[i]))
+##### MODEL 1 #####
+for i in [0,1]:
+    #Creates folder
+    for _dir in ['validation', 'train']:
+        if not os.path.exists(os.path.join(root_path, 'data', 'dataset', 'model1', _dir, folders[i])):
+            os.makedirs(os.path.join(root_path, 'data', 'dataset', 'model1', _dir, folders[i]))
 
-#     #Creates paths for src and destination of both validation data and training data
-#     _src = os.path.join(root_path, 'data', folders[i])
-#     _val_dst = os.path.join(root_path, 'data', 'dataset', 'model1', 'validation', folders[i])
-#     _train_dst = os.path.join(root_path, 'data', 'dataset', 'model1', 'train', folders[i])
+    #Creates paths for src and destination of both validation data and training data
+    _src = os.path.join(root_path, 'data', folders[i])
+    _val_dst = os.path.join(root_path, 'data', 'dataset', 'model1', 'validation', folders[i])
+    _train_dst = os.path.join(root_path, 'data', 'dataset', 'model1', 'train', folders[i])
     
-#     _files = [f for f in os.listdir(_src)]
+    _files = [f for f in os.listdir(_src)]
 
-#     #Calls helper function
-#     _data = sample_data(_src, _val_dst, 1000, _files) #Validation
+    #Calls helper function
+    _data = sample_data(_src, _val_dst, 1000, _files) #Validation
 
-#     sample_data(_src, _train_dst, 2000, _data) #Training
+    sample_data(_src, _train_dst, 2000, _data) #Training
 
-# ##### MODEL 2 #####
-# for i in [2,3]:
-#     #Creates folder
-#     for _dir in ['validation', 'train']:
-#         if not os.path.exists(os.path.join(root_path, 'data', 'dataset', 'model2', _dir, folders[i])):
-#             os.makedirs(os.path.join(root_path, 'data', 'dataset', 'model2', _dir, folders[i]))
+##### MODEL 2 #####
+for i in [2,3]:
+    #Creates folder
+    for _dir in ['validation', 'train']:
+        if not os.path.exists(os.path.join(root_path, 'data', 'dataset', 'model2', _dir, folders[i])):
+            os.makedirs(os.path.join(root_path, 'data', 'dataset', 'model2', _dir, folders[i]))
 
-#     #Creates paths for src and destination of both validation data and training data
-#     _src = os.path.join(root_path, 'data', folders[i])
-#     _val_dst = os.path.join(root_path, 'data', 'dataset', 'model2', 'validation', folders[i])
-#     _train_dst = os.path.join(root_path, 'data', 'dataset', 'model2', 'train', folders[i])
+    #Creates paths for src and destination of both validation data and training data
+    _src = os.path.join(root_path, 'data', folders[i])
+    _val_dst = os.path.join(root_path, 'data', 'dataset', 'model2', 'validation', folders[i])
+    _train_dst = os.path.join(root_path, 'data', 'dataset', 'model2', 'train', folders[i])
 
-#     _files = [f for f in os.listdir(_src)]
+    _files = [f for f in os.listdir(_src)]
 
-#     #Calls helper function
-#     _data = sample_data(_src, _val_dst, 500, _files) #Validation
-#     sample_data(_src, _train_dst, 250, _data) #Training
+    #Calls helper function
+    _data = sample_data(_src, _val_dst, 500, _files) #Validation
+    sample_data(_src, _train_dst, 250, _data) #Training
 
 # ##### MODEL 3 #####
 # for i in [0]:
