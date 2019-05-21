@@ -14,11 +14,14 @@ import os
 # identical to the previous one
 model = load_model('model1.h5')
 
-# Freeze the layers except the last 4 layers
+# Freeze the layers except the last layer
+# CHANGE THIS TO EXPERIMENT WITH DIFFERENT FROZEN LAYERS
 for layer in model.layers[:-1]:
     layer.trainable = False
 
+# Print out model definition
 model.summary()
+
 # Check the trainable status of the individual layers
 for layer in model.layers:
     print(layer, layer.trainable)
@@ -32,7 +35,9 @@ training_data = os.path.join(root_path, '..', 'data', 'dataset', 'model2', 'trai
 # Validation data
 validation_data = os.path.join(root_path, '..', 'data', 'dataset', 'model2', 'validation')
 
-trainImageDataGen = ImageDataGenerator(rescale=1 / 255., horizontal_flip=True)
+# Data generators, data augmentation for training data
+trainImageDataGen = ImageDataGenerator(rescale=1 / 255., horizontal_flip=True, rotation_range=25, width_shift_range=10,
+                                       height_shift_range=10, vertical_flip=True)
 validationImageDataGen = ImageDataGenerator(rescale=1 / 255.)
 
 trainGen = trainImageDataGen.flow_from_directory(
@@ -47,10 +52,18 @@ valGen = validationImageDataGen.flow_from_directory(
     batch_size=16,
     class_mode="binary")
 
+# Prepare the model for training
+model.compile(loss='binary_crossentropy', optimizer='adam')
+
+# Train model
 model.fit_generator(generator=trainGen,
-					epochs=20,
-					steps_per_epoch=10,
-					validation_steps=5,
+                    epochs=20,
+                    steps_per_epoch=10,
+                    validation_steps=5,
                     validation_data=valGen)
+
+# Save model
 model.save("model2.h5")
+
+# Evaluate model
 model.evaluate_generator(valGen, steps=5)
