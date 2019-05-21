@@ -21,6 +21,9 @@ folders = ['3 Nymphalidae', '4 Lycaenidae']
 # Training data
 training_data = os.path.join(root_path, '..', 'data', 'dataset', 'model2', 'train', folders[0])
 
+if not os.path.exists(training_data):
+    os.makedirs(training_data)
+
 preview_folder = os.path.join(root_path, '..', 'data', 'dataset', 'model2','preview')
 
 if not os.path.exists(preview_folder):
@@ -34,9 +37,12 @@ x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 15
 
 # the .flow() command below generates batches of randomly transformed images
 # and saves the results to the `preview/` directory
-i = 0
-for batch in datagen.flow(x, batch_size=1,
-                          save_to_dir=preview_folder, save_prefix='cat', save_format='jpeg'):
-    i += 1
-    if i > 20:
-        break  # otherwise the generator would loop indefinitely
+
+datagen.flow(x, batch_size=1,
+                          save_to_dir=preview_folder, save_prefix='cat', save_format='jpeg')
+# i = 0
+# for batch in datagen.flow(x, batch_size=1,
+#                           save_to_dir=preview_folder, save_prefix='cat', save_format='jpeg'):
+#     i += 1
+#     if i > 3:
+#         break  # otherwise the generator would loop indefinitely
