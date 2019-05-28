@@ -58,6 +58,8 @@ model.add(Dense(1, activation='softmax'))
 # Print out model definition
 model.summary()
 
+plot_model(model, to_file='model.png')
+
 # Prepare the model for training
 model.compile(loss='binary_crossentropy', optimizer='adam')
 
